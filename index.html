@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITLD - Institute of Technical and Leadership Development</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo img {
+            height: 60px;
+            filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.4));
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ef4444;
+            text-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: white;
+            min-width: 250px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            z-index: 1001;
+            top: 100%;
+            left: 0;
+            overflow: hidden;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-content a:hover {
+            background: linear-gradient(135deg, #ef4444 0%, #0ea5e9 100%);
+            color: white;
+            text-shadow: none;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(239, 68, 68, 0.1) 100%);
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Large Logo in Hero */
+        .hero-logo {
+            margin-bottom: 2rem;
+        }
+
+        .hero-logo svg {
+            width: 300px;
+            height: 200px;
+            filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.3));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #0ea5e9 0%, #ef4444 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.3));
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: #555;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ef4444 0%, #0ea5e9 100%);
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(239, 68, 68, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);
+            filter: brightness(1.1);
+        }
+
+        /* Courses Section */
+        .courses {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #0ea5e9 0%, #ef4444 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .course-card h3 {
+            color: #ef4444;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-card ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .course-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .course-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #0ea5e9;
+            font-weight: bold;
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.05) 0%, rgba(220, 38, 127, 0.05) 100%);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #1e40af;
+        }
+
+        .about-image {
+            text-align: center;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Achievements Section */
+        .achievements {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .achievement-card {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.1) 0%, rgba(220, 38, 127, 0.1) 100%);
+            border-radius: 15px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-card:hover {
+            border: 2px solid rgba(220, 38, 127, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .achievement-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #1e40af 0%, #dc267f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Faculty Section */
+        .faculty {
+            padding: 80px 0;
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.05) 0%, rgba(220, 38, 127, 0.05) 100%);
+        }
+
+        .faculty-card {
+            text-align: center;
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Registration Form */
+        .registration {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #dc267f;
+            box-shadow: 0 0 10px rgba(220, 38, 127, 0.2);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #dc267f 0%, #1e40af 100%);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(220, 38, 127, 0.3);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.1) 0%, rgba(220, 38, 127, 0.1) 100%);
+        }
+
+        .contact-info {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-item {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-item h3 {
+            color: #dc267f;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1e40af 0%, #dc267f 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .course-grid,
+            .achievement-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <svg width="60" height="60" viewBox="0 0 250 80">
+                    <circle cx="35" cy="30" r="12" fill="#ef4444"/>
+                    <circle cx="20" cy="30" r="9" fill="#94a3b8"/>
+                    <circle cx="50" cy="30" r="9" fill="#94a3b8"/>
+                    <rect x="28" y="38" width="14" height="20" fill="#ef4444" rx="3"/>
+                    <rect x="13" y="38" width="11" height="16" fill="#94a3b8" rx="2"/>
+                    <rect x="46" y="38" width="11" height="16" fill="#94a3b8" rx="2"/>
+                    <text x="85" y="40" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#0ea5e9">ITLD</text>
+                </svg>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li class="dropdown">
+                    <a href="#courses">Courses</a>
+                    <div class="dropdown-content">
+                        <a href="#english-mastery">English Grammar & Literature</a>
+                        <a href="#phonics">Phonics (Beginner to Advanced)</a>
+                        <a href="#handwriting">Handwriting Development</a>
+                        <a href="#creative">Drawing & Creative Development</a>
+                    </div>
+                </li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#faculty">Faculty</a></li>
+                <li><a href="#achievements">Achievements</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-logo">
+                        <svg width="300" height="200" viewBox="0 0 600 200">
+                            <circle cx="85" cy="75" r="30" fill="#ef4444"/>
+                            <circle cx="50" cy="75" r="22" fill="#94a3b8"/>
+                            <circle cx="120" cy="75" r="22" fill="#94a3b8"/>
+                            <rect x="70" y="95" width="35" height="50" fill="#ef4444" rx="7"/>
+                            <rect x="32" y="95" width="27" height="40" fill="#94a3b8" rx="5"/>
+                            <rect x="112" y="95" width="27" height="40" fill="#94a3b8" rx="5"/>
+                            <text x="210" y="100" font-family="Arial, sans-serif" font-size="70" font-weight="bold" fill="#0ea5e9">ITLD</text>
+                        </svg>
+                    </div>
+                    <h1>Making Studies Simpler</h1>
+                    <p>Institute of Technical and Leadership Development - Where every child excels in English and beyond</p>
+                    <a href="#registration" class="cta-button">Book Free Demo Class</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="courses" class="courses">
+            <div class="container">
+                <h2 class="section-title">Our Courses</h2>
+                <div class="course-grid">
+                    <div class="course-card">
+                        <h3>English Grammar & Literature</h3>
+                        <ul>
+                            <li>Grammar Foundations</li>
+                            <li>Advanced Grammar</li>
+                            <li>Board Exam Preparation</li>
+                            <li>Literature Appreciation (up to 11th std)</li>
+                        </ul>
+                        <p>Building strong foundation to advanced level preparation for school and board exams.</p>
+                    </div>
+                    
+                    <div class="course-card">
+                        <h3>Phonics Program</h3>
+                        <ul>
+                            <li>Beginner Level</li>
+                            <li>Intermediate Level</li>
+                            <li>Advanced Level</li>
+                        </ul>
+                        <p>Structured learning approach that guarantees speech improvement and fluent reading development.</p>
+                    </div>
+                    
+                    <div class="course-card">
+                        <h3>Handwriting Development</h3>
+                        <ul>
+                            <li>Basic Letter Formation</li>
+                            <li>Cursive Writing</li>
+                            <li>Speed & Clarity</li>
+                        </ul>
+                        <p>Improve writing clarity, speed, and overall presentation for better academic performance.</p>
+                    </div>
+                    
+                    <div class="course-card">
+                        <h3>Drawing & Creative Development</h3>
+                        <ul>
+                            <li>Basic Drawing Skills</li>
+                            <li>Creative Expression</li>
+                            <li>Artistic Development</li>
+                        </ul>
+                        <p>Enhance creativity and artistic expression while developing fine motor skills.</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <p style="font-size: 1.1rem; color: #666;"><strong>Online classes available (IST timing) for international students</strong></p>
+                    <p style="font-size: 1rem; color: #888; margin-top: 1rem;">Group classes available at same skill levels. Call for batch timings and availability.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>About ITLD</h2>
+                        <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">We are an education institute dedicated to helping children learn and making studies simpler. Our comprehensive approach focuses on building strong foundations in English language skills while fostering creativity and personal development.</p>
+                        <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">With structured learning programs and experienced educators, we ensure every child receives personalized attention to excel in their academic journey.</p>
+                        <p style="font-size: 1.1rem; color: #dc267f; font-weight: 600;">Located in Sanapada, Sector-14, Navi Mumbai-400705</p>
+                    </div>
+                    <div class="about-image">
+                        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Children studying in classroom" style="width: 100%; height: 300px; object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="achievements" class="achievements">
+            <div class="container">
+                <h2 class="section-title">Our Achievements</h2>
+                <div class="achievement-grid">
+                    <div class="achievement-card">
+                        <div class="achievement-number">600+</div>
+                        <h3>Students Scoring 90%+</h3>
+                        <p>In English Grammar & Literature</p>
+                    </div>
+                    
+                    <div class="achievement-card">
+                        <div class="achievement-number">100%</div>
+                        <h3>Speech Improvement</h3>
+                        <p>Guaranteed through our phonics program</p>
+                    </div>
+                    
+                    <div class="achievement-card">
+                        <div class="achievement-number">95%</div>
+                        <h3>Fluent Reading</h3>
+                        <p>Achieved through structured phonics learning</p>
+                    </div>
+                    
+                    <div class="achievement-card">
+                        <div class="achievement-number">5+</div>
+                        <h3>Years of Excellence</h3>
+                        <p>In educational development</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faculty" class="faculty">
+            <div class="container">
+                <h2 class="section-title">Our Faculty</h2>
+                <div class="faculty-card">
+                    <h3 style="color: #dc267f; font-size: 1.8rem; margin-bottom: 1rem;">Roma Pawar</h3>
+                    <p style="font-size: 1.2rem; color: #1e40af; font-weight: 600; margin-bottom: 1rem;">Head of Institute & English Educator</p>
+                    <p style="font-size: 1.1rem; color: #666;">Leading our team of experienced English educators dedicated to making studies simpler and more effective for every child.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="registration" class="registration">
+            <div class="container">
+                <h2 class="section-title">Register for Free Demo Class</h2>
+                <div class="form-container">
+                    <form id="registrationForm">
+                        <div class="form-group">
+                            <label for="studentName">Student Name *</label>
+                            <input type="text" id="studentName" name="studentName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="parentName">Parent Name *</label>
+                            <input type="text" id="parentName" name="parentName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="age">Child's Age *</label>
+                            <input type="number" id="age" name="age" min="3" max="18" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="school">School Name *</label>
+                            <input type="text" id="school" name="school" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="standard">Standard/Grade *</label>
+                            <select id="standard" name="standard" required>
+                                <option value="">Select Standard</option>
+                                <option value="Nursery">Nursery</option>
+                                <option value="LKG">LKG</option>
+                                <option value="UKG">UKG</option>
+                                <option value="1st">1st Standard</option>
+                                <option value="2nd">2nd Standard</option>
+                                <option value="3rd">3rd Standard</option>
+                                <option value="4th">4th Standard</option>
+                                <option value="5th">5th Standard</option>
+                                <option value="6th">6th Standard</option>
+                                <option value="7th">7th Standard</option>
+                                <option value="8th">8th Standard</option>
+                                <option value="9th">9th Standard</option>
+                                <option value="10th">10th Standard</option>
+                                <option value="11th">11th Standard</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subjects">Subject(s) of Interest *</label>
+                            <select id="subjects" name="subjects" required>
+                                <option value="">Select Subject</option>
+                                <option value="English Grammar">English Grammar</option>
+                                <option value="English Literature">English Literature</option>
+                                <option value="Phonics">Phonics</option>
+                                <option value="Handwriting">Handwriting Development</option>
+                                <option value="Drawing">Drawing & Creative Development</option>
+                                <option value="Multiple">Multiple Subjects</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact">Preferred Contact Method *</label>
+                            <select id="contact" name="contact" required>
+                                <option value="">Select Method</option>
+                                <option value="Call">Phone Call</option>
+                                <option value="WhatsApp">WhatsApp</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Register for Free Demo</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title">Contact Us</h2>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h3>📞 Phone & WhatsApp</h3>
+                        <p style="font-size: 1.3rem; font-weight: 600; color: #1e40af;">9820218569</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h3>📍 Address</h3>
+                        <p>Sanapada, Sector-14<br>Navi Mumbai - 400705</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h3>🕒 Batch Timings</h3>
+                        <p>Call for available batch timings and enrollment</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h3>💰 Fees Information</h3>
+                        <p>Contact us for detailed fee structure and payment options</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 ITLD - Institute of Technical and Leadership Development. Making Studies Simpler.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Form submission handler
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Create WhatsApp message
+            const message = `New Demo Class Registration:
+            
+Student: ${data.studentName}
+Parent: ${data.parentName}
+Phone: ${data.phone}
+Age: ${data.age}
+School: ${data.school}
+Standard: ${data.standard}
+Subject Interest: ${data.subjects}
+Preferred Contact: ${data.contact}`;
+            
+            // WhatsApp URL
+            const whatsappURL = `https://wa.me/919820218569?text=${encodeURIComponent(message)}`;
+            
+            // Open WhatsApp
+            window.open(whatsappURL, '_blank');
+            
+            // Show success message
+            alert('Thank you for registering! You will be redirected to WhatsApp to complete your registration.');
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
